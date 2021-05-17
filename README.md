@@ -6,5 +6,6 @@ Specifically meant for students. Pulls class data and initially puts into day pl
 
 ## Practicing with branches
 quicktest
+soup de soup
 
 
