@@ -5,5 +5,6 @@ Specifically meant for students. Pulls class data and initially puts into day pl
 ## Practice with git
 
 ## Practicing with branches
+quicktest
 
 
