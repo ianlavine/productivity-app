@@ -3,7 +3,7 @@
 
 class Event:
     """event"""
-    def __init__(self, title, desc="", time=None, pri=2, est=1, category='work') -> None:
+    def __init__(self, title, desc="", time=None, pri=2, est=1, category='work', start=None, end=None) -> None:
         self.title = title
         self.description = desc
         self.time = time
