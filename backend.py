@@ -74,7 +74,7 @@ class User:
     """
     ...
     """
-    username: str
+    email: str
     password: str
     name: str
     tasks: list  # A list of tuples containing the task and the amount of time allocated
@@ -84,7 +84,7 @@ class User:
     hobbies: list
     want_to_learn: list
 
-    def __init__(self, username: str, password: str, name: str, tasks: list, activities: list,
+    def __init__(self, email: str, password: str, name: str, tasks: list, activities: list,
                  hobbies: list, want_to_learn: list):
         ...
 
