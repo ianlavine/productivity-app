@@ -231,7 +231,6 @@ class Day:
                 prev, curr = curr, curr.next
             else:
                 prev, curr = curr, curr.next
-            
 
     def sort_day(self):
         """Sorts linked list in terms of time.
