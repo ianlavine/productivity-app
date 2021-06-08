@@ -97,6 +97,11 @@ class User:
 
             return smaller_sorted + [pivot] + bigger_sorted
 
+    def find_priority(self) -> int:
+        """
+        """
+        ...
+
 
 class Day:
     """A linked list implementation of the List ADT.
@@ -162,6 +167,12 @@ class Day:
         else:
             return False
 
+    def pick_time(self, event: Any) -> int:
+        """Picks a time for an event to occur in (for asynchronous events)
+        """
+        length = event.estimate_length
+        curr = self._first
+        prev = None
 
     def create_day_onlyevents(self, user: Any) -> None:
         """Mutates nodes so that the linked list represents all tasks needed to complete in the day
@@ -171,11 +182,12 @@ class Day:
             raise ValueError('The estimated time for all events is greater than the time awake.')
         else:
             curr = self._first
-            prev = None
             while curr is not None:
-                if prev is None and (curr.start - user.wakeup_time) > ...:
+                if curr.item.start is None:
                     ...
-
+                    curr = curr.next
+                else:
+                    curr = curr.next
 
     def recreation_check(self, recreation: Any) -> bool:
         """Checks if a certain recreational event is already in the day (helper function for insert_recreation)
@@ -206,10 +218,20 @@ class Day:
         recreation.end = recreation.start + recreation.estimated_length
         self.append(recreation)
 
-    def create_day(self, user = User) -> None:
+    def create_day(self, user: Any) -> None:
         """ Creates whole day
         """
-        ...
+        self.create_day_onlyevents(user)
+        self.sort_day
+        curr = self._first
+        prev = None
+        while curr is not None and prev is not None:
+            if (curr.start - prev.end) > 1:
+                self.insert_recreation(random.choice(user.hobbies), user, prev, curr)
+                prev, curr = curr, curr.next
+            else:
+                prev, curr = curr, curr.next
+            
 
     def sort_day(self):
         """Sorts linked list in terms of time.
@@ -255,7 +277,7 @@ class Day:
 
         while curr is not None:
             if prev is not None :
-                if range():
+                if range(...):
                     lst.append((curr, prev))
             else:
                 prev = curr
