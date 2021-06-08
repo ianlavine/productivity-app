@@ -70,7 +70,7 @@ class User:
         self.sleep_time = sleep
         self.wakeup_time = wakeup
     
-    def _partition(lst: list, pivot: Any) -> tuple[list, list]:
+    def _partition(self, lst: list, pivot: Any) -> tuple[list, list]:
         smaller = []
         bigger = []
 
