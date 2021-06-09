@@ -5,6 +5,7 @@ from types import AsyncGeneratorType
 from typing import Any, Iterable, Optional
 import random
 import copy
+import datetime
     
 
 @dataclass
@@ -26,14 +27,18 @@ class Event:
     title: str
     description: str
     time: int
-    priority: int
+    priority: float
     estimated_length: int
     start: int
     end: int
     category: str
+    due_date: datetime.date
+    difficulty: str
+    importance: int
+    size = str
 
-    def __init__(self, title: str, priority: int, desc = "", time = None, est = 1, category='work', 
-    start = None, end = None) -> None:
+    def __init__(self, title: str, priority = None, desc = "", time = None, est = 1, category='work', 
+    start = None, end = None, due_date = None, difficulty = 'med', importance = 3) -> None:
         self.title = title
         self.description = desc
         self.time = time
@@ -42,10 +47,12 @@ class Event:
         self.start = start
         self.end = end
         self.category = category
+        self.due_date = due_date
+        self.difficulty = difficulty
+        self.importance = importance
 
 class User:
-    """
-    ...
+    """Somebody who uses this planning app
     """
     email: str
     password: str
@@ -55,9 +62,11 @@ class User:
     want_to_learn: list
     sleep_time: int
     wakeup_time: int
+    goals: list
+    bad_habits: list
 
-    def __init__(self, email: str, password: str, name: str, events: list[dict], 
-                 hobbies: list[dict], want_to_learn: list[dict], sleep: int, wakeup: int):
+    def __init__(self, email: str, password: str, name: str, events: list[dict], hobbies: 
+        list[dict], want_to_learn: list[dict], sleep: int, wakeup: int, goals, bad_habits: list):
                  # events, hobbies and want_to_learn are list[dict]. Each dictionary is an event
                  # where each key of the dictionary would represent a class instance of Event.
                  # e.g. {title: "soccer", description: "...", ...}
@@ -69,6 +78,8 @@ class User:
         self.want_to_learn = self.sort_priority([Event(...) for skill in want_to_learn])
         self.sleep_time = sleep
         self.wakeup_time = wakeup
+        self.goals = goals
+        self.bad_habits = bad_habits
     
     def _partition(self, lst: list, pivot: Any) -> tuple[list, list]:
         smaller = []
@@ -98,9 +109,47 @@ class User:
             return smaller_sorted + [pivot] + bigger_sorted
 
     def find_priority(self) -> int:
+        """gives a priority to every event
         """
-        """
-        ...
+
+        now = datetime.date.today()
+        due_dates = {0: 10, 1: 7, 2: 5, 3: 4, 4: 3, 5: 2, 6: 1}
+        difficulties = {'easy': -1, 'med': 2, 'hard': 5}
+        categories = {}
+
+        for event in self.events:
+
+            if event.category not in categories:
+                categories[event.category] = [event]
+            else:
+                categories[event.category].append(event)
+
+            if event.priority is None:
+                event.priority = 0.0
+                if event.category in self.want_to_learn:
+                    event.priority += 1
+                if event.category in self.goals:
+                    event.priority += 2
+                if event.category in self.bad_habits:
+                    event.priority -= 1
+
+                event.priority += difficulties[event.difficulty]
+                event.priority += event.importance
+
+                if event.due_date is not None:
+                    delta = event.due_date - now
+                    days = delta.days
+                    if days < 7:
+                        event.priority += due_dates[days]
+
+            tie_breaker = (float(random.randrange(1, 100)))/100
+            event.priority += tie_breaker
+
+        for cat in categories:
+            cur = categories[cat]
+            by_priority = sorted(cur, key=lambda event: event.priority, reverse=True)
+            for x in range(0, len(by_priority)):
+                by_priority[x].priority -= 2 * x
 
 
 class Day:
