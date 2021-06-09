@@ -22,3 +22,5 @@ class Event:
     def init(self) -> None:
         """initilize an event instance"""
 
+print('moose')
+
