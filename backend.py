@@ -100,7 +100,44 @@ class User:
     def find_priority(self) -> int:
         """
         """
-        ...
+        now = datetime.date.today()
+        due_dates = {0: 10, 1: 7, 2: 5, 3: 4, 4: 3, 5: 2, 6: 1}
+        difficulties = {'easy': -1, 'med': 2, 'hard': 5}
+        categories = {}
+
+        for event in self.events:
+
+            if event.category not in categories:
+                categories[event.category] = [event]
+            else:
+                categories[event.category].append(event)
+
+            if event.priority is None:
+                event.priority = 0.0
+                if event.category in self.want_to_learn:
+                    event.priority += 1
+                if event.category in self.goals:
+                    event.priority += 2
+                if event.category in self.bad_habits:
+                    event.priority -= 1
+
+                event.priority += difficulties[event.difficulty]
+                event.priority += event.importance
+
+                if event.due_date is not None:
+                    delta = event.due_date - now
+                    days = delta.days
+                    if days < 7:
+                        event.priority += due_dates[days]
+
+            tie_breaker = (float(random.randrange(1, 100)))/100
+            event.priority += tie_breaker
+
+        for cat in categories:
+            cur = categories[cat]
+            by_priority = sorted(cur, key=lambda event: event.priority, reverse=True)
+            for x in range(0, len(by_priority)):
+                by_priority[x].priority -= 2 * x
 
 
 class Day:
@@ -173,6 +210,7 @@ class Day:
         length = event.estimate_length
         curr = self._first
         prev = None
+        ...
 
     def create_day_onlyevents(self, user: Any) -> None:
         """Mutates nodes so that the linked list represents all tasks needed to complete in the day
