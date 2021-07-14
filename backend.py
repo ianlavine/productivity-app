@@ -269,9 +269,9 @@ class Day:
                 prev, curr = curr, curr.next
 
     def sort_day(self):
-    """Sorts linked list in terms of time.
-    """
-
+        """
+        Sorts linked list in terms of time.
+        """
         link_to_list = self.to_list()
         link_to_list.sort(key=lambda e, e.item.start)
 
