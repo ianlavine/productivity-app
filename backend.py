@@ -157,9 +157,6 @@ class User:
 class Day:
     """A linked list implementation of the List ADT.
     """
-    # Private Instance Attributes:
-    #   - _first: The first node in the linked list, or None if the list is empty.
-    _first: Optional[Node]
 
     def init(self, user: Any) -> None:
         """Initialize a new linked list containing the given items.
