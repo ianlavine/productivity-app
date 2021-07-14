@@ -31,7 +31,7 @@ h2 {
 
 /*Section 1: Log In*/
 #login_body {
-    background-color: aquamarine;
+    background-color:#979597;
     background-image: url(../images/login.jpg);
     border: 0.1px solid blanchedalmond;
     background-repeat: no-repeat;
@@ -177,4 +177,8 @@ p {
     background-size: cover;
 }
 
+.creators {
+    background-color:#979597;
+
+}
 
