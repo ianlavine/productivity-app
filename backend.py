@@ -65,20 +65,22 @@ class User:
     goals: list
     bad_habits: list
 
-    def __init__(self, email: str, password: str, name: str, events: list[dict], hobbies: 
-        list[dict], want_to_learn: list[dict], sleep: int, wakeup: int, goals, bad_habits: list):
+    def init(self, email: str, password: str, name: str, events: list[dict], 
+                 hobbies: list[dict], want_to_learn: list[dict], sleep: int, wakeup: int):
                  # events, hobbies and want_to_learn are list[dict]. Each dictionary is an event
                  # where each key of the dictionary would represent a class instance of Event.
-                 # e.g. {title: "soccer", description: "...", ...}
+                 # e.g. {'title': "soccer", 'description': "...", ...}
         self.email = email
         self.password = password
         self.name = name
-        self.events = self.sort_priority([Event(...) for event in events])
-        self.hobbies = self.sort_priority([Event(...) for hobby in hobbies])
-        self.want_to_learn = self.sort_priority([Event(...) for skill in want_to_learn])
+        self.events = self.sort_priority([Event(event['title'], event['description'], event['time'], event['priority'],
+        event['estimated_length'], event['start'], event['end'], event['category']) for event in events])
+        self.hobbies = self.sort_priority([Event(hobby['title'], hobby['description'], hobby['time'], hobby['priority'],
+        hobby['estimated_length'], hobby['start'], hobby['end'], hobby['category']) for hobby in hobbies])
+        self.want_to_learn = self.sort_priority([Event(skill['title'], skill['description'], skill['time'], skill['priority'],
+        skill['estimated_length'], skill['start'], skill['end'], skill['category']) for skill in want_to_learn])
         self.sleep_time = sleep
         self.wakeup_time = wakeup
-        self.goals = goals
         self.bad_habits = bad_habits
     
     def _partition(self, lst: list, pivot: Any) -> tuple[list, list]:
@@ -159,12 +161,17 @@ class Day:
     #   - _first: The first node in the linked list, or None if the list is empty.
     _first: Optional[Node]
 
-    def __init__(self, user: Any) -> None:
+    def init(self, user: Any) -> None:
         """Initialize a new linked list containing the given items.
         """
         self._first = None
         for event in user.events:
             self.append(event)
+
+        temp = self._first
+        self._first = Node(Event('Wake up', 1, 'AWAKE', None, 0, 'life', user.wakeup_time, user.wakeup_time))
+        self._first.next = temp
+        self.append(Event('Sleep', 2, 'BEDTIME', None, 0, 'life', user.sleep_time, user.sleep_time))
 
     def to_list(self) -> list:
         """Return a built-in Python list containing the items of this linked list.
@@ -175,57 +182,36 @@ class Day:
 
         curr = self._first
         while curr is not None:
-            items_so_far.append(curr.item)
+            items_so_far.append(curr)
             curr = curr.next
 
         return items_so_far
 
-    def __len__(self) -> int:
-        """Return the number of elements in this list.
-        """
-        curr = self._first
-        len_so_far = 0
-        while curr is not None:
-            len_so_far += 1
-            curr = curr.next
-
-        return len_so_far
-
-    def __contains__(self, item: Any) -> bool:
-        """Return whether item is in this linked list.
-        """
-        curr = self._first
-        while curr is not None:
-            if curr.item == item:
-                return True
-
-            curr = curr.next
-        return False
-
-    def check_hours(self, user: Any) -> bool:
+    def check_hours(self) -> bool:
         """Checks if the estimated time for all events is less than the time awake.
         """
+        link_to_list = to_list()
+
+        accumulator = sum([x.item.estimated_length for x in link_to_list])
         time_awake = user.sleep_time - user.wakeup_time
-        accumulator = 0
-        curr = self._first
-        while curr is not None:
-            accumulator += curr.estimated_length
-        
-        if accumulator <= time_awake:
-            return True
-        else:
-            return False
+
+        return accumulator <= time_awake:
 
     def pick_time(self, event: Any) -> int:
         """Picks a time for an event to occur in (for asynchronous events)
         """
         length = event.estimate_length
-        curr = self._first
-        prev = None
+        curr = self._first.next
+        prev = self._first
+        while curr is not None:
+            if (curr.item.start - prev.item.end) > length:
+                return random.randint(prev.item.end, curr.item.start)
+            else:
+                prev, curr = curr, curr.next
 
     def create_day_onlyevents(self, user: Any) -> None:
         """Mutates nodes so that the linked list represents all tasks needed to complete in the day
-         with start and end times for asynchronous events.  
+         with start and end times for asynchronous events.
         """
         if self.check_hours(user) is False:
             raise ValueError('The estimated time for all events is greater than the time awake.')
@@ -233,7 +219,8 @@ class Day:
             curr = self._first
             while curr is not None:
                 if curr.item.start is None:
-                    ...
+                    time = self.pick_time(curr.item)
+                    curr.item.start = time
                     curr = curr.next
                 else:
                     curr = curr.next
@@ -243,11 +230,11 @@ class Day:
         """
         curr = self._first
         while curr is not None:
-            if curr.title == recreation.title:
+            if curr.item.title == recreation.title:
                 return True
             else:
                 curr = curr.next
-        
+
         return False
 
     def insert_recreation(self, og_recreation: Any, user: Any, event1 = None, event2 = None) -> None:
@@ -271,50 +258,30 @@ class Day:
         """ Creates whole day
         """
         self.create_day_onlyevents(user)
-        self.sort_day
+        self.sort_day()
         curr = self._first
         prev = None
         while curr is not None and prev is not None:
-            if (curr.start - prev.end) > 1:
-                self.insert_recreation(random.choice(user.hobbies), user, prev, curr)
+            if (curr.item.start - prev.item.end) > 1:
+                self.insert_recreation(random.choice(user.hobbies), user, prev.item, curr.item)
                 prev, curr = curr, curr.next
             else:
                 prev, curr = curr, curr.next
 
     def sort_day(self):
-        """Sorts linked list in terms of time.
-        """
-        if self._first.next is None: 
-            return self._first
-        else:
-            mid = self.getMid(self._first)
-            left = self.sort_day(self._first)
-            right = self.sort_day(mid)
-            return self.merge(left, right)
-    
-    def getMid(self, head):
-        """Helper function for sort_day
-        """
-        prev, curr = head, head
-        while curr.next and curr.next.next:
-            prev = prev.next
-            curr = curr.next.next
-        mid = prev.next
-        prev.next = None
-        return mid
-    
-    def merge(self, head1, head2):
-        """2nd helper function for sort_day
-        """
-        dummy = tail = Day(None)
-        while head1 and head2:
-            if head1.item.start < head2.item.start:
-                tail.next, head1 = head1, head1.next
-            else:
-                tail.next, head2 = head2, head2.next
+    """Sorts linked list in terms of time.
+    """
 
-        tail.next = head1 or head2
-        return dummy.next
+        link_to_list = self.to_list()
+        link_to_list.sort(key=lambda e, e.item.start)
+
+        self._first = Node(link_to_list[0])
+        curr = self._first
+        for node in link_to_list[1:]:
+            curr.next = node
+            curr = node
+
+        return self._first
     
     def check_overlap(self) -> list[tuple]:
         """Returns a list of events that have overlapping times
@@ -330,6 +297,7 @@ class Day:
             else:
                 prev = curr
                 curr = curr.next
+
 
 
 class Schedule:
