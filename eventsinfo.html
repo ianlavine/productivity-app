@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Info</title>
+    <link rel="stylesheet" href="infostyles.css">
+</head>
+
+<body>
+    <div>
+        <h1>Tell us more about you...</h1>
+    </div>
+
+    <div>
+        <h2>What time do you wake up and sleep?</h2>
+        
+        <label for="wakeup">Wake up time:</label>
+        <select name="wakeup" id="wakeup">
+            <option value=2>2 AM</option>
+            <option value=3>3 AM</option>
+            <option value=4>4 AM</option>
+            <option value=5>5 AM</option>
+        </select>
+
+        <label for="sleep">Sleep time:</label>
+        <select name="sleep" id="sleep">
+            <option value=2>2 AM</option>
+            <option value=3>3 AM</option>
+            <option value=4>4 AM</option>
+            <option value=5>5 AM</option>
+        </select>
+    </div>
+
+    <div>
+        <h2>What do you have to do today?</h2>
+        <div class="event_input">
+            <br>
+            <label for="fname">Event name:</label>
+            <input type="text" id="fname" name="fname">
+
+            <label for="event_categories">Event category:</label>
+            <select name="event_categories" id="event_categories">
+                <option value='Get fit'>Get fit</option>
+                <option value='Consumerism'>Consumerism</option>
+                <option value='Entertainment'>Entertainment</option>
+                <option value='The dough'>The dough</option>
+                <option value='Mental Health'>Mental Health</option>
+            </select>
+
+            <br>
+            
+            <label for="start_time">Start time:</label>
+            <select name="start_time" id="start_time">
+                <option value=2>2 AM</option>
+                <option value=3>3 AM</option>
+                <option value=4>4 AM</option>
+                <option value=5>5 AM</option>
+            </select>
+    
+            <label for="end_time">End time:</label>
+            <select name="end_time" id="end_time">
+                <option value=2>2 AM</option>
+                <option value=3>3 AM</option>
+                <option value=4>4 AM</option>
+                <option value=5>5 AM</option>
+            </select>
+
+            <label for="estimated_length">Estimated length of activity:</label>
+            <select name="estimated_length" id="estimated_length">
+                <option value=1>1 Hour</option>
+                <option value=2>2 Hours</option>
+                <option value=3>3 Hours</option>
+                <option value=4>4 Hours</option>
+                <option value=5>5 Hours</option>
+            </select><br>
+            
+            <label for="description">Description of activity:</label>
+            <textarea id="description" name="description" rows="4" cols="50">
+            </textarea>
+            <br><br>
+
+            
+        </div>
+        <a>Add Event +</a>
+    </div>
+
+    <div>
+        <h2>What are your hobbies?</h2>
+        <div class="event_input">
+            <br>
+            <label for="fname">Hobby:</label>
+            <input type="text" id="fname" name="fname">
+
+            <label for="hobby_categories">Hobby category:</label>
+            <select name="hobby_categories" id="hobby_categories">
+                <option value='Get fit'>Get fit</option>
+                <option value='Consumerism'>Consumerism</option>
+                <option value='Entertainment'>Entertainment</option>
+                <option value='The dough'>The dough</option>
+                <option value='Mental Health'>Mental Health</option>
+            </select>
+
+            <br>
+
+            <label for="hobby_estimated_length">Estimated time spent:</label>
+            <select name="hobby_estimated_length" id="hobby_estimated_length">
+                <option value=1>1 Hour</option>
+                <option value=2>2 Hours</option>
+                <option value=3>3 Hours</option>
+                <option value=4>4 Hours</option>
+                <option value=5>5 Hours</option>
+            </select><br>
+            
+            <label for="hobby_description">Description of hobby:</label>
+            <textarea id="hobby_description" name="hobby_description" rows="4" cols="50">
+            </textarea>
+            <br><br>
+            
+        </div>
+        <a>Add Hobby +</a>
+    </div>
+
+    <div>
+        <h2>What are your goals / the things you want to learn?</h2>
+        <div class="event_input">
+            <br>
+            <label for="fname">Goal:</label>
+            <input type="text" id="fname" name="fname">
+
+            <label for="event_categories">Goal category:</label>
+            <select name="event_categories" id="event_categories">
+                <option value='Get fit'>Get fit</option>
+                <option value='Consumerism'>Consumerism</option>
+                <option value='Entertainment'>Entertainment</option>
+                <option value='The dough'>The dough</option>
+                <option value='Mental Health'>Mental Health</option>
+            </select>
+
+            <br>
+
+            <label for="estimated_length">Estimated time spent:</label>
+            <select name="estimated_length" id="estimated_length">
+                <option value=1>1 Hour</option>
+                <option value=2>2 Hours</option>
+                <option value=3>3 Hours</option>
+                <option value=4>4 Hours</option>
+                <option value=5>5 Hours</option>
+            </select><br>
+            
+            <label for="description">Description of goal:</label>
+            <textarea id="description" name="description" rows="4" cols="50">
+            </textarea>
+            <br><br>
+
+        </div>
+        <a>Add Goal +</a>
+    </div>
+
+</body>
+
+</html>
