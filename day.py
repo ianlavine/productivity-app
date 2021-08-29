@@ -47,6 +47,7 @@ class Day:
             self.put_in_slot(task, time)
             time += task.estimated_length
 
+
     def assess_day(self) -> None:
         """make sure there all goals in self.goals have a task in self.tasks
          with that category. If not, adds a task from task_bank in that category.
