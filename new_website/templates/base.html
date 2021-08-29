@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="style.css">
+      <title>
+          {% block title %}
+
+          {% endblock %}
+      </title>
+   </head>
+   <body>
+      <!-- Navbar here -->
+      <nav class="navbar">
+            <a class="navbar-left" href="{{ url_for('home_page') }}">Home</a>
+            <a class="navbar-left" href="">About</a>
+            <a class="navbar-left" href="">Dashboard</a>
+
+            <a class="navbar-right" href="">Login</a>
+            <a class="navbar-right" href="">Sign Up</a>
+        </nav>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        <button type="button" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}
+
+        {% endblock %}
+      <!-- Future Content here -->
+
+   </body>
+</html>

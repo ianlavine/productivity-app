@@ -1,0 +1,243 @@
+body {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(201, 196, 192);
+}
+
+section{
+    margin: 0%;
+    object-fit: cover;
+}
+
+.navbar {
+    background-color: white;
+}
+
+.navbar-left {
+    font-family: Verdana, Geneva, sans-serif;
+    color: black;
+    text-decoration: none;
+    text-align: left;
+}
+
+.navbar-right {
+    font-family: Verdana, Geneva, sans-serif;
+    color:#545454;
+    text-align: right;
+    text-decoration: none;
+}
+.main_header {
+    color: black;
+    font-size: 6vw;
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+h2 {
+    color: black;
+    font-size: 3vw;
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: lighter;
+    margin-top: 0px;
+}
+
+
+/*Section 1: Log In*/
+#home_body {
+    background-color:#979597;
+    background-image: url(../images/login.jpg);
+    border: 0.1px solid blanchedalmond;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0% 5% 5% 5%;
+    height: auto;
+    min-height: fit-content;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#home_title_box {
+    background-image: url(../images/transparent_white.png);
+    width: 60%;
+    height: 70%;
+    padding: 10% 5%;
+    margin: 10% 30% 10% 5%;
+}
+
+#home_text {
+    padding-left: 50%;
+    color: black;
+    font-size: 3vw;
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: lighter;
+    margin-top: 0px;
+}
+
+#login_box {
+    background-color: white;
+    border-radius: 25px;
+    width: 30%;
+    height: auto;
+    min-height: fit-content;
+    padding: 5% 0%;
+    top: 10%;
+    left: 60%;
+    position: absolute;
+    text-align: center;
+    display: inline;
+}
+
+#logo {
+    width: 30%;
+    height: auto;
+    margin: auto;
+}
+
+#login {
+    margin: auto;
+    padding-top: 10px;
+}
+
+#login_form {
+    padding: 5% 10%;
+    background-color: white;
+}
+
+#login_form label {
+    display: block;
+}
+
+label {
+    font-size: 1.25vw;
+    color: gray;
+    font-family: Verdana, Geneva, sans-serif;
+    text-align: left;
+    margin-bottom: 0;
+}
+
+
+#email, #password {
+    background-color: lightgray;
+    width: 97%;
+    font-size: 1.15vw;
+    margin: auto;
+    border: none;
+    padding: 5px 2px 5px 5px;
+    margin: 2% 5% 5% 0%;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px 15px;
+    border: 0;
+    background: #333;
+    color: #fff;
+    border-radius: 5px;
+    margin: 5px 0;
+    font-size: 1.25vw;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: rgb(78, 78, 78);
+  }
+
+/*
+.error {
+    background-color: orangered;
+    color: #fff;
+    padding: 5px;
+    margin: 5px;
+}
+*/
+
+#signup_link {
+    color: black;
+    font-size: 1.5vw;
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: lighter;
+    margin-top: 0px;
+}
+
+#signup_link a{
+    color: #0068ad;
+    text-decoration: none;
+}
+
+#signup_link a:hover{
+    text-decoration: underline;
+}
+
+/* Split the screen in half */
+.split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+
+/* Control the left side */
+.left {
+left: 0;
+background-color: #979597;
+}
+
+/* Control the right side */
+.right {
+right: 0;
+background-image: url(images/login.jpg);
+}
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+text-align: center;
+}
+
+
+
+/*Section 2: About Us*/
+#about_us {
+    background-color:#979597;
+}
+
+#about {
+    padding: 5% 5% 0% 5%;
+    color: #473f31;
+    font-size: 6vw;
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: bold;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+p {
+    padding: 0% 5%;
+    font-weight: light;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 2vw;
+    line-height: 180%;
+}
+
+.section_img {
+    width: 100%;
+    background-size: cover;
+}
+
+.creators {
+    background-color:#979597;
+
+}
+
