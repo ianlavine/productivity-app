@@ -57,7 +57,11 @@ class User:
     sleep_time: int
     wakeup_time: int
 
+<<<<<<< HEAD
     def __init__(self, email: str, password: str, name: str, events: list[dict], 
+=======
+    def init(self, email: str, password: str, name: str, events: list[dict], 
+>>>>>>> dc5ee2a20cd52ab80b0d16da667b08825c09c5bb
                  hobbies: list[dict], want_to_learn: list[dict], sleep: int, wakeup: int):
                  # events, hobbies and want_to_learn are list[dict]. Each dictionary is an event
                  # where each key of the dictionary would represent a class instance of Event.
@@ -73,6 +77,10 @@ class User:
         skill['estimated_length'], skill['start'], skill['end'], skill['category']) for skill in want_to_learn])
         self.sleep_time = sleep
         self.wakeup_time = wakeup
+<<<<<<< HEAD
+=======
+        self.bad_habits = bad_habits
+>>>>>>> dc5ee2a20cd52ab80b0d16da667b08825c09c5bb
     
     def _partition(self, lst: list, pivot: Any) -> tuple[list, list]:
         smaller = []
@@ -151,7 +159,7 @@ class Day:
     #   - _first: The first node in the linked list, or None if the list is empty.
     _first: Optional[Node]
 
-    def __init__(self, user: Any) -> None:
+    def init(self, user: Any) -> None:
         """Initialize a new linked list containing the given items.
         """
         self._first = None
@@ -160,6 +168,11 @@ class Day:
         
         temp = self._first
         self._first = Event('Wake up', 1, 'AWAKE', None, 0, 'life', user.wakeup_time, user.wakeup_time)
+        self._first.next = temp
+        self.append(Event('Sleep', 2, 'BEDTIME', None, 0, 'life', user.sleep_time, user.sleep_time))
+
+        temp = self._first
+        self._first = Node(Event('Wake up', 1, 'AWAKE', None, 0, 'life', user.wakeup_time, user.wakeup_time))
         self._first.next = temp
         self.append(Event('Sleep', 2, 'BEDTIME', None, 0, 'life', user.sleep_time, user.sleep_time))
 
@@ -172,11 +185,12 @@ class Day:
 
         curr = self._first
         while curr is not None:
-            items_so_far.append(curr.item)
+            items_so_far.append(curr)
             curr = curr.next
 
         return items_so_far
 
+<<<<<<< HEAD
 
     def __contains__(self, item: Any) -> bool:
         """Return whether item is in this linked list.
@@ -190,9 +204,16 @@ class Day:
         return False
 
     def check_hours(self, user: Any) -> bool:
+=======
+    def check_hours(self) -> bool:
+>>>>>>> dc5ee2a20cd52ab80b0d16da667b08825c09c5bb
         """Checks if the estimated time for all events is less than the time awake.
         """
+        link_to_list = to_list()
+
+        accumulator = sum([x.item.estimated_length for x in link_to_list])
         time_awake = user.sleep_time - user.wakeup_time
+<<<<<<< HEAD
         accumulator = 0
         curr = self._first
         while curr is not None:
@@ -202,6 +223,10 @@ class Day:
             return True
         else:
             return False
+=======
+
+        return accumulator <= time_awake:
+>>>>>>> dc5ee2a20cd52ab80b0d16da667b08825c09c5bb
 
     def pick_time(self, event: Any) -> int:
         """Picks a time for an event to occur in (for asynchronous events)
@@ -214,11 +239,14 @@ class Day:
                 return random.randint(prev.item.end, curr.item.start)
             else:
                 prev, curr = curr, curr.next
+<<<<<<< HEAD
 
+=======
+>>>>>>> dc5ee2a20cd52ab80b0d16da667b08825c09c5bb
 
     def create_day_onlyevents(self, user: Any) -> None:
         """Mutates nodes so that the linked list represents all tasks needed to complete in the day
-         with start and end times for asynchronous events.  
+         with start and end times for asynchronous events.
         """
         if self.check_hours(user) is False:
             raise ValueError('The estimated time for all events is greater than the time awake.')
@@ -241,7 +269,7 @@ class Day:
                 return True
             else:
                 curr = curr.next
-        
+
         return False
 
     def insert_recreation(self, og_recreation: Any, user: Any, event1 = None, event2 = None) -> None:
@@ -276,39 +304,19 @@ class Day:
                 prev, curr = curr, curr.next
 
     def sort_day(self):
-        """Sorts linked list in terms of time.
         """
-        if self._first.next is None: 
-            return self._first
-        else:
-            mid = self.getMid(self._first)
-            left = self.sort_day(self._first)
-            right = self.sort_day(mid)
-            return self.merge(left, right)
-    
-    def getMid(self, head):
-        """Helper function for sort_day
+        Sorts linked list in terms of time.
         """
-        prev, curr = head, head
-        while curr.next and curr.next.next:
-            prev = prev.next
-            curr = curr.next.next
-        mid = prev.next
-        prev.next = None
-        return mid
-    
-    def merge(self, head1, head2):
-        """2nd helper function for sort_day
-        """
-        dummy = tail = Day(None)
-        while head1 and head2:
-            if head1.item.start < head2.item.start:
-                tail.next, head1 = head1, head1.next
-            else:
-                tail.next, head2 = head2, head2.next
+        link_to_list = self.to_list()
+        link_to_list.sort(key=lambda e, e.item.start)
 
-        tail.next = head1 or head2
-        return dummy.next
+        self._first = Node(link_to_list[0])
+        curr = self._first
+        for node in link_to_list[1:]:
+            curr.next = node
+            curr = node
+
+        return self._first
     
     def check_overlap(self) -> list[tuple]:
         """Returns a list of events that have overlapping times
@@ -324,6 +332,7 @@ class Day:
             else:
                 prev = curr
                 curr = curr.next
+
 
 
 class Schedule:
