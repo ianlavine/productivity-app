@@ -61,13 +61,16 @@ class User:
                  hobbies: list[dict], want_to_learn: list[dict], sleep: int, wakeup: int):
                  # events, hobbies and want_to_learn are list[dict]. Each dictionary is an event
                  # where each key of the dictionary would represent a class instance of Event.
-                 # e.g. {title: "soccer", description: "...", ...}
+                 # e.g. {'title': "soccer", 'description': "...", ...}
         self.email = email
         self.password = password
         self.name = name
-        self.events = self.sort_priority([Event(...) for event in events])
-        self.hobbies = self.sort_priority([Event(...) for hobby in hobbies])
-        self.want_to_learn = self.sort_priority([Event(...) for skill in want_to_learn])
+        self.events = self.sort_priority([Event(event['title'], event['description'], event['time'], event['priority'],
+        event['estimated_length'], event['start'], event['end'], event['category']) for event in events])
+        self.hobbies = self.sort_priority([Event(hobby['title'], hobby['description'], hobby['time'], hobby['priority'],
+        hobby['estimated_length'], hobby['start'], hobby['end'], hobby['category']) for hobby in hobbies])
+        self.want_to_learn = self.sort_priority([Event(skill['title'], skill['description'], skill['time'], skill['priority'],
+        skill['estimated_length'], skill['start'], skill['end'], skill['category']) for skill in want_to_learn])
         self.sleep_time = sleep
         self.wakeup_time = wakeup
     
@@ -98,7 +101,7 @@ class User:
 
             return smaller_sorted + [pivot] + bigger_sorted
 
-    def find_priority(self) -> int:
+    def find_priority(self):
         """
         """
         now = datetime.date.today()
@@ -154,6 +157,11 @@ class Day:
         self._first = None
         for event in user.events:
             self.append(event)
+        
+        temp = self._first
+        self._first = Event('Wake up', 1, 'AWAKE', None, 0, 'life', user.wakeup_time, user.wakeup_time)
+        self._first.next = temp
+        self.append(Event('Sleep', 2, 'BEDTIME', None, 0, 'life', user.sleep_time, user.sleep_time))
 
     def to_list(self) -> list:
         """Return a built-in Python list containing the items of this linked list.
@@ -169,16 +177,6 @@ class Day:
 
         return items_so_far
 
-    def __len__(self) -> int:
-        """Return the number of elements in this list.
-        """
-        curr = self._first
-        len_so_far = 0
-        while curr is not None:
-            len_so_far += 1
-            curr = curr.next
-
-        return len_so_far
 
     def __contains__(self, item: Any) -> bool:
         """Return whether item is in this linked list.
@@ -198,7 +196,7 @@ class Day:
         accumulator = 0
         curr = self._first
         while curr is not None:
-            accumulator += curr.estimated_length
+            accumulator += curr.item.estimated_length
         
         if accumulator <= time_awake:
             return True
@@ -209,9 +207,14 @@ class Day:
         """Picks a time for an event to occur in (for asynchronous events)
         """
         length = event.estimate_length
-        curr = self._first
-        prev = None
-        ...
+        curr = self._first.next
+        prev = self._first
+        while curr is not None:
+            if (curr.item.start - prev.item.end) > length:
+                return random.randint(prev.item.end, curr.item.start)
+            else:
+                prev, curr = curr, curr.next
+
 
     def create_day_onlyevents(self, user: Any) -> None:
         """Mutates nodes so that the linked list represents all tasks needed to complete in the day
@@ -223,7 +226,8 @@ class Day:
             curr = self._first
             while curr is not None:
                 if curr.item.start is None:
-                    ...
+                    time = self.pick_time(curr.item)
+                    curr.item.start = time
                     curr = curr.next
                 else:
                     curr = curr.next
@@ -233,7 +237,7 @@ class Day:
         """
         curr = self._first
         while curr is not None:
-            if curr.title == recreation.title:
+            if curr.item.title == recreation.title:
                 return True
             else:
                 curr = curr.next
@@ -261,12 +265,12 @@ class Day:
         """ Creates whole day
         """
         self.create_day_onlyevents(user)
-        self.sort_day
+        self.sort_day()
         curr = self._first
         prev = None
         while curr is not None and prev is not None:
-            if (curr.start - prev.end) > 1:
-                self.insert_recreation(random.choice(user.hobbies), user, prev, curr)
+            if (curr.item.start - prev.item.end) > 1:
+                self.insert_recreation(random.choice(user.hobbies), user, prev.item, curr.item)
                 prev, curr = curr, curr.next
             else:
                 prev, curr = curr, curr.next
