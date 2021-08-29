@@ -12,6 +12,18 @@ section{
     object-fit: cover;
 }
 
+.navbar {
+    background-color: white;
+}
+
+.navbar-left {
+    font-family: Verdana, Geneva, sans-serif;
+    color: black
+}
+
+.navbar-right {
+    font-family: Verdana, Geneva, sans-serif;
+}
 .main_header {
     color: black;
     font-size: 6vw;
