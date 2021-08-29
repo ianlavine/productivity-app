@@ -47,7 +47,7 @@ h2 {
 
 
 /*Section 1: Log In*/
-#login_body {
+#home_body {
     background-color:#979597;
     background-image: url(../images/login.jpg);
     border: 0.1px solid blanchedalmond;
@@ -62,12 +62,21 @@ h2 {
     box-sizing: border-box;
 }
 
-#login_title_box {
+#home_title_box {
     background-image: url(../images/transparent_white.png);
     width: 60%;
     height: 70%;
     padding: 10% 5%;
     margin: 10% 30% 10% 5%;
+}
+
+#home_text {
+    padding-left: 50%;
+    color: black;
+    font-size: 3vw;
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: lighter;
+    margin-top: 0px;
 }
 
 #login_box {
@@ -164,6 +173,39 @@ label {
 #signup_link a:hover{
     text-decoration: underline;
 }
+
+/* Split the screen in half */
+.split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+
+/* Control the left side */
+.left {
+left: 0;
+background-color: #979597;
+}
+
+/* Control the right side */
+.right {
+right: 0;
+background-image: url(images/login.jpg);
+}
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+text-align: center;
+}
+
 
 
 /*Section 2: About Us*/
