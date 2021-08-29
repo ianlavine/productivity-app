@@ -53,6 +53,15 @@ h2 {
     margin: 10% 30% 10% 5%;
 }
 
+#login_text {
+    padding-left: 50%;
+    color: black;
+    font-size: 3vw;
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: lighter;
+    margin-top: 0px;
+}
+
 #login_box {
     background-color: white;
     border-radius: 25px;
